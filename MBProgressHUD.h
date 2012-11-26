@@ -339,6 +339,14 @@ typedef void (^MBProgressHUDCompletionBlock)();
  */
 @property (assign) BOOL dimBackground;
 
+/**
+ * Manages the darkness of the dimBackground if the value of 
+ * `dimBackground` is YES. 
+ *
+ * 0 is the clearest while 1 is the darkest.
+ */
+@property (assign) CGFloat dimBackgroundOpacity;
+
 /*
  * Grace period is the time (in seconds) that the invoked method may be run without 
  * showing the HUD. If the task finishes before the grace time runs out, the HUD will
