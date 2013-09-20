@@ -416,6 +416,18 @@ typedef void (^MBProgressHUDCompletionBlock)();
  */
 @property (assign, getter = isSquare) BOOL square;
 
+/**
+ * Text color of the main label.
+ * Defaults to white [UIColor whiteColor].
+ */
+@property (nonatomic, MB_STRONG) UIColor *labelTextColor;
+
+/**
+ * Activity indicator color. Only used for MBProgressHUDModeIndeterminate mode (the default).
+ * If nil, UIActivityIndicatorViewStyleWhiteLarge will be used instead.
+ */
+@property (nonatomic, MB_STRONG) UIColor *activityIndicatorColor;
+
 @end
 
 
