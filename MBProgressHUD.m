@@ -753,7 +753,8 @@ static const CGFloat kDetailsLabelFontSize = 12.f;
 
   // On iOS 8, the window is already rotated, so we don't need do do our own rotation anymore.
   // TODO update this when a NSFoundationVersionNumber_iOS_8 constant is available
-  if (NSFoundationVersionNumber > NSFoundationVersionNumber_iOS_7_1)
+  // TODO update this hardcoded number to NSFoundationVersionNumber_iOS_7_1 when we get Xcode 6 and its libraries onto Jenkins
+  if (NSFoundationVersionNumber > 1047.25)  // > NSFoundationVersionNumber_iOS_7_1
   {
     return;
   }
