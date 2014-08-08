@@ -750,7 +750,14 @@ static const CGFloat kDetailsLabelFontSize = 12.f;
 		self.bounds = self.superview.bounds;
 		[self setNeedsDisplay];
 	}
-	
+
+  // On iOS 8, the window is already rotated, so we don't need do do our own rotation anymore.
+  // TODO update this when a NSFoundationVersionNumber_iOS_8 constant is available
+  if (NSFoundationVersionNumber > NSFoundationVersionNumber_iOS_7_1)
+  {
+    return;
+  }
+
 	UIInterfaceOrientation orientation = [UIApplication sharedApplication].statusBarOrientation;
 	CGFloat radians = 0;
 	if (UIInterfaceOrientationIsLandscape(orientation)) {
