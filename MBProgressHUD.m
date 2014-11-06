@@ -546,16 +546,16 @@ static const CGFloat kDetailsLabelFontSize = 12.f;
 	totalSize.width = MAX(totalSize.width, indicatorF.size.width);
 	totalSize.height += indicatorF.size.height;
 
-    CGSize labelSize = CGSizeZero;
-    if (label.numberOfLines == 1) {
-        // For 1 line label
-        labelSize = MB_TEXTSIZE(label.text, label.font);
-    } else {
-        // Multiline title label
-        CGFloat remainingHeightForTitleLabel = bounds.size.height - totalSize.height - kPadding - 3 * margin;
-        CGSize maxSizeForTitleLabel = CGSizeMake(maxWidth, remainingHeightForTitleLabel);
-        MB_MULTILINE_TEXTSIZE(label.text,label.font, maxSizeForTitleLabel, label.lineBreakMode);
-    }
+  CGSize labelSize = CGSizeZero;
+  if (label.numberOfLines == 1) {
+    // For 1 line label
+    labelSize = MB_TEXTSIZE(label.text, label.font);
+  } else {
+    // Multiline title label
+    CGFloat remainingHeightForTitleLabel = bounds.size.height - totalSize.height - kPadding - 3 * margin;
+    CGSize maxSizeForTitleLabel = CGSizeMake(maxWidth, remainingHeightForTitleLabel);
+    labelSize = MB_MULTILINE_TEXTSIZE(label.text,label.font, maxSizeForTitleLabel, label.lineBreakMode);
+  }
 
 	labelSize.width = MIN(labelSize.width, maxWidth);
 	totalSize.width = MAX(totalSize.width, labelSize.width);
