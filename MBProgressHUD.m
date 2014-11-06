@@ -537,7 +537,7 @@ static const CGFloat kDetailsLabelFontSize = 12.f;
 	}
 	CGRect bounds = self.bounds;
 	
-	// Determine the total widt and height needed
+	// Determine the total width and height needed
 	CGFloat maxWidth = bounds.size.width - 4 * margin;
 	CGSize totalSize = CGSizeZero;
 	
@@ -545,8 +545,18 @@ static const CGFloat kDetailsLabelFontSize = 12.f;
 	indicatorF.size.width = MIN(indicatorF.size.width, maxWidth);
 	totalSize.width = MAX(totalSize.width, indicatorF.size.width);
 	totalSize.height += indicatorF.size.height;
-	
-	CGSize labelSize = MB_TEXTSIZE(label.text, label.font);
+
+  CGSize labelSize = CGSizeZero;
+  if (label.numberOfLines == 1) {
+    // For 1 line label
+    labelSize = MB_TEXTSIZE(label.text, label.font);
+  } else {
+    // Multiline title label
+    CGFloat remainingHeightForTitleLabel = bounds.size.height - totalSize.height - kPadding - 3 * margin;
+    CGSize maxSizeForTitleLabel = CGSizeMake(maxWidth, remainingHeightForTitleLabel);
+    labelSize = MB_MULTILINE_TEXTSIZE(label.text,label.font, maxSizeForTitleLabel, label.lineBreakMode);
+  }
+
 	labelSize.width = MIN(labelSize.width, maxWidth);
 	totalSize.width = MAX(totalSize.width, labelSize.width);
 	totalSize.height += labelSize.height;
@@ -554,7 +564,7 @@ static const CGFloat kDetailsLabelFontSize = 12.f;
 		totalSize.height += kPadding;
 	}
 
-	CGFloat remainingHeight = bounds.size.height - totalSize.height - kPadding - 4 * margin; 
+	CGFloat remainingHeight = bounds.size.height - totalSize.height - kPadding - 4 * margin;
 	CGSize maxSize = CGSizeMake(maxWidth, remainingHeight);
 	CGSize detailsLabelSize = MB_MULTILINE_TEXTSIZE(detailsLabel.text, detailsLabel.font, maxSize, detailsLabel.lineBreakMode);
 	totalSize.width = MAX(totalSize.width, detailsLabelSize.width);
@@ -681,7 +691,7 @@ static const CGFloat kDetailsLabelFontSize = 12.f;
 
 - (NSArray *)observableKeypaths {
 	return [NSArray arrayWithObjects:@"mode", @"customView", @"labelText", @"labelFont", @"labelColor",
-			@"detailsLabelText", @"detailsLabelFont", @"detailsLabelColor", @"progress", @"activityIndicatorColor", nil];
+			@"detailsLabelText", @"detailsLabelFont", @"detailsLabelColor", @"progress", @"activityIndicatorColor", @"allowMultilinesTitleLabel", nil];
 }
 
 - (void)observeValueForKeyPath:(NSString *)keyPath ofObject:(id)object change:(NSDictionary *)change context:(void *)context {
@@ -702,7 +712,9 @@ static const CGFloat kDetailsLabelFontSize = 12.f;
 		label.font = self.labelFont;
 	} else if ([keyPath isEqualToString:@"labelColor"]) {
 		label.textColor = self.labelColor;
-	} else if ([keyPath isEqualToString:@"detailsLabelText"]) {
+    } else if ([keyPath isEqualToString:@"allowMultilinesTitleLabel"]) {
+        label.numberOfLines = self.allowMultilinesTitleLabel ? 0 : 1;
+    } else if ([keyPath isEqualToString:@"detailsLabelText"]) {
 		detailsLabel.text = self.detailsLabelText;
 	} else if ([keyPath isEqualToString:@"detailsLabelFont"]) {
 		detailsLabel.font = self.detailsLabelFont;
