@@ -397,6 +397,14 @@ typedef void (^MBProgressHUDCompletionBlock)();
  */
 @property (assign) BOOL removeFromSuperViewOnHide;
 
+/**
+ * Defaulted to `NO`. Setting to `YES` sets the `numberOfLines` 
+ * on the label displaying title to 0 making text on the label
+ * overflows to the next line.
+ *
+ */
+@property (assign) BOOL allowMultilinesTitleLabel;
+
 /** 
  * Font to be used for the main label. Set this property if the default is not adequate. 
  */
