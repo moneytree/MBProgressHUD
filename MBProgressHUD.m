@@ -767,36 +767,6 @@ static const CGFloat kDetailsLabelFontSize = 12.f;
 		self.bounds = self.superview.bounds;
 		[self setNeedsDisplay];
 	}
-
-  // On iOS 8, the window is already rotated, so we don't need do do our own rotation anymore.
-  // TODO update this when a NSFoundationVersionNumber_iOS_8 constant is available
-  // TODO update this hardcoded number to NSFoundationVersionNumber_iOS_7_1 when we get Xcode 6 and its libraries onto Jenkins
-  if (NSFoundationVersionNumber > 1047.25)  // > NSFoundationVersionNumber_iOS_7_1
-  {
-    return;
-  }
-
-	UIInterfaceOrientation orientation = [UIApplication sharedApplication].statusBarOrientation;
-	CGFloat radians = 0;
-	if (UIInterfaceOrientationIsLandscape(orientation)) {
-		if (orientation == UIInterfaceOrientationLandscapeLeft) { radians = -(CGFloat)M_PI_2; } 
-		else { radians = (CGFloat)M_PI_2; }
-		// Window coordinates differ!
-		self.bounds = CGRectMake(0, 0, self.bounds.size.height, self.bounds.size.width);
-	} else {
-		if (orientation == UIInterfaceOrientationPortraitUpsideDown) { radians = (CGFloat)M_PI; } 
-		else { radians = 0; }
-	}
-	rotationTransform = CGAffineTransformMakeRotation(radians);
-	
-	if (animated) {
-		[UIView beginAnimations:nil context:nil];
-		[UIView setAnimationDuration:0.3];
-	}
-	[self setTransform:rotationTransform];
-	if (animated) {
-		[UIView commitAnimations];
-	}
 }
 
 @end
